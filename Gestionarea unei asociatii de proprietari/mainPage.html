@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    /* Styles for the first page */
+    #first-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    #logo {
+      /* Style for the logo */
+    }
+
+    #menu {
+      /* Style for the menu */
+      text-align: center;
+    }
+
+    .menu-button {
+		color: white;
+		background-color: blue;
+		border-radius: 5px;
+		/* Other styles for the menu buttons */
+	}
+
+
+    /* Styles for the second page */
+    #second-page {
+      /* Style for the main content */
+    }
+	
+	#main-content {
+		border: none;
+	}
+  </style>
+</head>
+
+<body bgcolor="#868686">
+  <div id="first-page">
+    <div id="logo">
+      Logo
+    </div>
+    <div id="menu">
+      <button class="menu-button" href="home.html">Home</button>
+      <button class="menu-button" href="about.html">About</button>
+      <button class="menu-button" href="contact.html">Contact us</button>
+      <button class="menu-button" href="login.html">Log In / Register</button>
+    </div>
+  </div>
+  <div id="second-page">
+    <iframe src="home.html" id="main-content" border="0"></iframe>
+  </div>
+  <script>
+    const menuButtons = document.querySelectorAll(".menu-button");
+	const firstPage = document.querySelector("#first-page");
+    const secondPage = document.querySelector("#second-page");
+    const mainContent = document.querySelector("#main-content");
+
+	// Save the state of the first and second pages when the user navigates the site
+    menuButtons.forEach(button => {
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        const pageUrl = event.target.getAttribute("href");
+		localStorage.setItem("firstPage", firstPage.innerHTML);
+        localStorage.setItem("secondPage", secondPage.innerHTML);
+		localStorage.setItem("currentPage", pageUrl);
+        mainContent.setAttribute("src", pageUrl);
+		history.pushState(null, null, pageUrl);
+      });
+    });
+	
+	// Update the URL of the page when the user refreshes the page and Restore the state of the first and second pages when the user refreshes the page
+    window.onbeforeunload = function() {
+		const firstPageHtml = firstPage.innerHTML;
+		// firstPage.innerHTML = localStorage.getItem("firstPage");
+		secondPage.innerHTML = localStorage.getItem("secondPage");
+	    const currentPage = localStorage.getItem("currentPage");
+		mainContent.setAttribute("src", currentPage);
+		window.history.replaceState(null, null, currentPage);
+		firstPage.innerHTML = firstPageHtml;
+    };
+
+  </script>
+  
+  <!-- In this example, the menuButtons variable is used to select all of the <button> elements with the menu-button class. The mainContent variable is used to select the <iframe> element that contains the main content of the page. 
+  This variable is used to update the src attribute of the <iframe> element when a button is clicked, which causes the page specified by the href attribute of the button to be loaded into the inline frame and displayed in the second page.
+  Then, a forEach() loop is used to iterate over each of these buttons and attach a click event listener to each one.
+
+  The click event listener uses the event.target.getAttribute("href") method to get the href attribute of the button that was clicked. 
+  This value is then used to update the src attribute of the <iframe> element, which causes the page specified by the href attribute to be loaded into the inline frame and displayed in the second page. -->
+  
+</body>
+
+</html>

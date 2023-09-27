@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>
+Inregistrare cont - e-Asociatie
+</title>
+
+<style>
+h2{
+  text-align: center;
+}
+
+input[type=text], input[type=password], input[type=email] {
+  text-align: center;
+  width: 100%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid #AAF3FF;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #FF7E7E;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #FF5B5B;
+}
+
+input[type=submit] {
+  width: 100%;
+  padding: 14px 20px;
+  background-color: #7a99ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #4570ff;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+.logo {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	color: #333;
+	text-decoration: none;
+	transition: color 0.2s;
+	display: inline-block;
+	height: 50px;
+	width: 200px;
+	text-align: center;
+	line-height: 50px;
+}
+
+.logo:hover {
+	color: #0d6efd;
+}
+
+.container {
+  background-color: #ffc107;
+  padding: 16px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+
+</head>
+<body bgcolor="#C5FBFF">
+
+  <div class="imgcontainer">
+	<a href="testMainPage.php" class="logo">
+	  e-Asociatie.ro
+	</a>
+  </div>
+
+  <h2>Formular de inregistrare</h2>
+
+<form action="register_action_page.php" method="post" onsubmit="return validateForm()" style="width: 30%; margin: 0 auto;">
+  <div class="container">
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Introduceti username-ul" name="username" id="username">
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Introduceti e-mailul" name="email" id="email">
+
+    <label for="psw"><b>Parola</b></label>
+    <input type="password" placeholder="Introduceti parola" name="psw" id="psw">
+
+    <label for="psw-repeat"><b>Reintroduceti parola</b></label>
+    <input type="password" placeholder="Reintroduceti parola" name="psw-repeat" id="psw-repeat">
+
+    <label for="termsPrivacy">
+		<input type="checkbox" id="termsPrivacy" name="termsPrivacy"> Prin crearea unui cont sunteti de acord cu <a href="Termene+si+Conditii.pdf">Termene și Condiții</a>.
+	</label>
+
+    <div class="buttonContainer">
+      <button type="button" class="cancelbtn" onclick="resetForm()">Resetare formular</button>
+      <input type="submit" value="Inregistreaza-te"></input>
+    </div>
+  </div>
+</form>
+
+<script>
+function resetForm() {
+  document.getElementById("username").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("psw").value = "";
+  document.getElementById("psw-repeat").value = "";
+}
+
+function validateForm() {
+  var username = document.getElementById("username").value;
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("psw").value;
+  var passwordRepeat = document.getElementById("psw-repeat").value;
+  
+  const checkbox = document.getElementById("termsPrivacy");
+
+  // Check if username is empty
+  if (username == "") {
+    alert("Please enter a username.");
+    return false;
+  }
+
+  // Check if email is empty
+  if (email == "") {
+    alert("Please enter an email address.");
+    return false;
+  }
+  
+  // Check if @ element exists in the email field
+  if (email.indexOf("@") === -1) {
+	alert("Please enter a valid email address that contains @ character");
+	return false;
+  }
+  
+  // Split the email address into parts
+  var parts = email.split("@");
+
+  // Check if the email address contains exactly one "@" character
+  if (parts.length !== 2) {
+	alert("Please enter an email address that contains only one @ character.");
+    return false;
+  }
+
+  // Check if the local part (the part before the "@" character) is not too long
+  if (parts[0].length > 32) {
+	alert("Please check the local part ( the part before @ ). It is too long.");
+    return false;
+  }
+
+  // Check if the domain part (the part after the "@" character) is not too long
+  if (parts[1].length > 32) {
+    alert("Please check the domain part ( the part after @ ). It is too long.");
+    return false;
+  }
+
+  // Check if the domain part contains at least one period (.) character
+  // if (parts[1].indexOf(".") > 1 || parts[1].indexOf(".") < 1) {
+    if (parts[1].indexOf(".") === -1) {
+    alert("Please check how many dots you have in your domain part. It should be atleast 1. ");
+    return false;
+  }
+
+  if (/[^a-zA-Z0-9@._+-]/.test(email)) {
+    alert("Illegal character/characters present in your email. Please re-check for typos.");
+    return false;
+  }
+
+  if (password == "") {
+    alert("Please enter a password.");
+    return false;
+  }
+  
+  // Password must be at least 8 characters long
+  if (password.length < 8) {
+    alert("Please enter a password that is atleast 8 characters long.");
+    return false;
+  }
+  
+    // Password must contain at least one number
+  if (!/\d/.test(password)) {
+	alert("The password is not strong enough. Please enter a password that contains at least one number.");
+    return false;
+  }
+
+  // Password must contain at least one uppercase letter
+  if (!/[A-Z]/.test(password)) {
+	alert("The password is not strong enough. Please enter a password that contains at least one uppercase letter");
+    return false;
+  }
+
+  // Password must contain at least one lowercase letter
+  if (!/[a-z]/.test(password)) {
+	alert("The password is not strong enough. Please enter a password that contains at least one lowercase letter");
+    return false;
+  }
+
+  if (password != passwordRepeat) {
+    alert("The passwords do not match.");
+    return false;
+  }
+  
+  if (!checkbox.checked) {
+    alert("Pentru a va inregistra este nevoie sa bifati faptul ca sunteti de acord cu termenii si conditiile site-ului!");
+	return false;
+  }
+
+  return true;
+}
+</script>
+
+</body>
+</html>
+

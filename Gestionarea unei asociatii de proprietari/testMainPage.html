@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+  Asociatia proprietari "Oltul"
+  </title>
+  <style>
+    /* Styles for the first page */
+    #first-page {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      height: 100%;
+    }
+
+    #logo {
+      /* Style for the logo */
+    }
+
+    #menu {
+      /* Style for the menu */
+      text-align: center;
+    }
+
+    .menu-button {
+		color: white;
+		background-color: blue;
+		border-radius: 5px;
+		/* Other styles for the menu buttons */
+		
+		width: 150px;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+	}
+	
+	.menu-button:hover {
+		background-color: lightblue;
+	}
+	
+	<!-- In this example, the :hover pseudo-class is used to apply a different set of styles to the .menu-button element when the mouse is hovered over it. 
+	In this case, the background-color property is set to lightblue, which will change the color of the buttons to light blue when the mouse is hovered over them.
+
+	When the button is hovered over, the styles in the .menu-button:hover rule will be applied, in addition to the styles in the .menu-button rule.
+	This will create the desired hover effect for your buttons. -->
+
+    /* Styles for the second page */
+    #second-page {
+      /* Style for the main content */
+    }
+	
+	#main-content {
+		border: none;
+	}
+  </style>
+</head>
+
+<?php include 'main_action_page.php';?>
+<body bgcolor="#868686">
+  <div id="first-page">
+    <div id="logo">
+      Logo
+    </div>
+    <div id="menu">
+	
+	<!-- When this input element is rendered in a web browser, it will create a clickable button with the text "Home" on it. When the button is clicked, the JavaScript function that is specified in the onclick attribute will be executed. 
+	In this case, the function sets the location.href property to the home.html page, which causes the browser to navigate to that page.
+
+	This code is an example of how you can use JavaScript to create a button that links to another page. You could also use the a element to create a link, as shown in the previous answer. -->
+	
+		<input type="button" class="menu-button" onclick="location.href='home.html';" value="Home" />
+		<input type="button" class="menu-button" onclick="location.href='about.html';" value="About" />
+		<input type="button" class="menu-button" onclick="location.href='contact.html';" value="Contact us" />
+    </div>
+	<div id="login">
+		<?php if (!$logged_in) { ?>
+		  <input type="button" class="menu-button" onclick="location.href='loginOrRegister.html';" value="Logare / Inregistrare" />
+		<?php } else { ?>
+          <input type="button" class="menu-button" onclick="location.href='myAccount.html';" value="My Account" />
+          <input type="button" class="menu-button" onclick="location.href='logout.php';" value="Logout" />
+    <?php } ?>
+	</div>
+  </div>
+  <hr>
+  
+</body>
+</html>
